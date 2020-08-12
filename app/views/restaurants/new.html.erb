@@ -1,0 +1,19 @@
+<p><%= link_to '← Back', restaurants_path %></p>
+
+<div class='card p-3'>
+  <%= simple_form_for @restaurant do |f| %>
+    <%= f.error_notification %>
+
+    <%= f.input :name %>
+
+    <%= f.input :category, as: :radio_buttons, collection: Restaurant::CATEGORY, wrapper: :vertical_collection_inline %>
+
+    <%= f.input :address %>
+
+    <%= f.input :phone_number %>
+
+    <%= f.button :submit, class: "btn-primary" %>
+    <%= f.button :button, "Cancel", type: "reset", class: "btn-outline-secondary" %>
+  <% end %>
+</div>
+

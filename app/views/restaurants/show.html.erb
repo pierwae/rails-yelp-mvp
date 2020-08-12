@@ -1,0 +1,38 @@
+<p><%= link_to '← Back', restaurants_path %></p>
+
+<div class="card p-3 mb-5">
+  <h3><%= @restaurant.name %></h3>
+  <p><strong>Category: </strong><%= @restaurant.category %></p>
+  <p><strong>Address: </strong><%= @restaurant.address %></p>
+  <p><strong>Phone number: </strong><%= @restaurant.phone_number %></p>
+</div>
+
+<div class="card p-3 mb-5">
+  <h3>Reviews</h3>
+  <% @restaurant.reviews.order(created_at: :desc).each do |review| %>
+    <div class="card p-3 mb-3">
+      <p><strong><%= review.created_at.in_time_zone(@zone).strftime('%a %d %b %Y %H:%M') %></strong></p>
+      <p><%= review.content %></p>
+      <p>
+        <% review.rating.times do %>
+          <i class="fas fa-star"></i>
+        <% end %>
+      </p>
+      <p><%= link_to 'Delete', review_path(review), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+    </div>
+  <% end %>
+
+  <div class="card p-3 mb-3">
+    <%= simple_form_for [@restaurant, @review] do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.input :content %>
+
+      <%= f.input :rating %>
+
+      <%= f.button :submit, class: "btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<p><%= link_to 'Delete', restaurant_path(@restaurant), method: :delete, data: { confirm: 'Are you sure?' } %></p>
